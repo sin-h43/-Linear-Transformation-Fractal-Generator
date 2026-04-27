@@ -1,4 +1,5 @@
 import os
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,7 +52,6 @@ def compare_parameters():
     points1 = generate_points(A_ORIGINAL)
     points2 = generate_points(A_MODIFIED)
 
-    plt.figure()
     plt.scatter(points1[:, 0], points1[:, 1], s=0.5, label="Original")
     plt.scatter(points2[:, 0], points2[:, 1], s=0.5, label="Modified")
     plt.legend()
@@ -71,11 +71,22 @@ def compute_eigen_values():
 
 
 def main():
-    plot_main_fractal()
-    plot_iterations()
-    compare_parameters()
-    compute_eigen_values()
+    parser = argparse.ArgumentParser(description= "Fractal Generator CLI")
+    parser.add_argument(
+        "mode",
+        choices=["fractal", "iter","compare","eigen"],
+        help = "Select what to run"
+    )
+    args = parser.parse_args()
+    if args.mode == "fractal":
+        plot_main_fractal()
+    elif args.mode == "iter":
+        plot_iterations()
+    elif args.mode == "compare":
+        compare_parameters()
+    elif args.mode == "eigen":
+        compute_eigen_values()
 
 
 if __name__ == "__main__":
-    main()
+    main() 
