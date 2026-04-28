@@ -14,6 +14,7 @@ This project explores how repeated linear transformations generate fractal-like 
 - Computes eigenvalues and eigenvectors of the transformation matrix
 - Saves generated plots inside the `results/` folder
 -Modular CLI-based execution
+- Animated fractal generation using Matplotlib
 
 ## Technologies Used
 
@@ -41,7 +42,6 @@ Repeated application produces comple geometric patterns.
 - Parameters sensitivity analysis
 
 ## Future Improvements
-- Add animations for fractal growth
 - Support custom matrices via CLI
 - Optimize performance for large iterations
 - Convert into interactive web app
