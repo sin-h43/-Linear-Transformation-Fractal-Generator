@@ -1,6 +1,7 @@
 import os
 import argparse
 import numpy as np
+import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 
 os.makedirs("results", exist_ok=True)
@@ -14,6 +15,30 @@ A_MODIFIED = np.array([[0.9, 0.1],
 b = np.array([0, 1.6])
 N = 10000
 
+def animate_fractal(A):
+    fig, ax = plt.subplots()
+    x = np.array([0, 0])
+    xs, ys = [], []
+
+    def update(frame):
+        nonlocal x
+        x = A @ x + b
+        xs.append(x[0])
+        ys.append(x[1])
+
+        ax.clear()
+        ax.scatter(xs, ys, s=1)
+        ax.set_title(f"Iteration {frame}")
+
+    ani = animation.FuncAnimation(
+        fig,
+        update,
+        frames=500,
+        interval=10,
+        repeat = False
+    )
+
+    plt.show()
 
 def generate_points(A, iterations=N):
     x = np.array([0, 0])
@@ -74,7 +99,7 @@ def main():
     parser = argparse.ArgumentParser(description= "Fractal Generator CLI")
     parser.add_argument(
         "mode",
-        choices=["fractal", "iter","compare","eigen"],
+        choices=["fractal", "iter","compare","eigen","animate"],
         help = "Select what to run"
     )
     args = parser.parse_args()
@@ -86,6 +111,8 @@ def main():
         compare_parameters()
     elif args.mode == "eigen":
         compute_eigen_values()
+    elif args.mode == "animate":
+        animate_fractal(A_ORIGINAL)
 
 
 if __name__ == "__main__":
